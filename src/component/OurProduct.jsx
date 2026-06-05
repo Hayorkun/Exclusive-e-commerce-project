@@ -2,63 +2,10 @@ import React from "react";
 import { useShop } from "../context/ShopContext";
 import { NavLink } from "react-router";
 import { Heart, EyeIcon, Star } from "lucide-react";
+import displayStar from "../utils/DisplayStar";
 
 const OurProduct = () => {
   const { products } = useShop();
-
-  const displayStar = (number) => {
-    if (number <= 1 && number > 0) {
-      return (
-        <div className="flex items-center justify-start">
-          <Star size={12} strokeWidth={0} className="fill-amber-300"/>
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-        </div>
-      );
-    } else if (number <= 2 && number > 1) {
-      return (
-        <div className="flex items-center justify-start">
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-        </div>
-      );
-    }  else if (number <= 3 && number > 2) {
-      return (
-        <div className="flex items-center justify-start">
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-        </div>
-      );
-    }  else if (number <= 4 && number > 3) {
-      return (
-        <div className="flex items-center justify-start">
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-amber-300" />
-          <Star size={12} strokeWidth={0} className="fill-gray-300" />
-        </div>
-      );
-    }  else if (number <= 5 && number > 4) {
-      return (
-        <div className="flex items-center justify-start">
-          <Star size={12} strokeWidth={0} className="fill-amber-300" /> 
-          <Star size={12} strokeWidth={0} className="fill-amber-300" /> 
-          <Star size={12} strokeWidth={0} className="fill-amber-300" /> 
-          <Star size={12} strokeWidth={0} className="fill-amber-300" /> 
-          <Star size={12} strokeWidth={0} className="fill-amber-300" /> 
-        </div>
-      );
-    }
-  };
 
   return (
     <section className="md:px-5 my-10">
@@ -75,21 +22,25 @@ const OurProduct = () => {
         <div className="">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 px-3">
             {products.slice(0, 12).map((f) => (
-              <div key={f.id} className="h-40">
+              <NavLink to={`/product/${f.id}`} key={f.id} className="h-40 relative">
                 <div className="flex-3/4 flex justify-center bg-gray-100 h-25">
-                  <img src={f.images} alt={f.title} className="w-25" />
-                  {/* <div clas>
+                  <img src={f.images[0]} alt={f.title} className="w-25" />
+                  <div className="absolute right-2 top-2">
                     <span className="">
-                      <Heart />
+                      <Heart className="size-5"/>
                     </span>
                     <span>
-                      <EyeIcon />
+                      <EyeIcon className="size-5"/>
                     </span>
-                  </div> */}
+                  </div>
                 </div>
                 <p className="font-body leading-relaxed ">{f.title}</p>
-                <p className="font-body">{displayStar(f.rating)}</p>
-              </div>
+                <div className="flex items-center gap-3">
+                  <p className="font-body text-sm">{`$${f.price}`}</p>
+                  <div className="font-body text-xs">Stock: ({`${f.stock}`})</div>
+                </div>
+                <div className="font-body">{displayStar(f.rating)}</div>
+              </NavLink>
             ))}
           </div>
           <div className="flex justify-center mt-5">
