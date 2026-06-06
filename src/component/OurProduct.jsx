@@ -1,7 +1,6 @@
-import React from "react";
 import { useShop } from "../context/ShopContext";
-import { NavLink } from "react-router";
-import { Heart, EyeIcon, Star } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { Heart, EyeIcon } from "lucide-react";
 import displayStar from "../utils/DisplayStar";
 
 const OurProduct = () => {
@@ -20,26 +19,32 @@ const OurProduct = () => {
           </h2>
         </div>
         <div className="">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 px-3">
-            {products.slice(0, 12).map((f) => (
-              <NavLink to={`/product/${f.id}`} key={f.id} className="h-40 relative">
-                <div className="flex-3/4 flex justify-center bg-gray-100 h-25">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 px-3">
+            {products.slice(0, 20).map((f) => (
+              <NavLink
+                to={`/product/${f.id}`}
+                key={f.id}
+                className="h-40 relative"
+              >
+                <div className="flex justify-center bg-gray-100 h-25">
                   <img src={f.images[0]} alt={f.title} className="w-25" />
-                  <div className="absolute right-2 top-2">
+                  <div className="absolute right-1 top-1">
                     <span className="">
-                      <Heart className="size-5"/>
+                      <Heart className="size-4" />
                     </span>
                     <span>
-                      <EyeIcon className="size-5"/>
+                      <EyeIcon className="size-4" />
                     </span>
                   </div>
                 </div>
-                <p className="font-body leading-relaxed ">{f.title}</p>
+                <p className="font-body text-sm leading-4">{f.title}</p>
+                <p className="font-body text-xs">{`$${f.price}`}</p>
                 <div className="flex items-center gap-3">
-                  <p className="font-body text-sm">{`$${f.price}`}</p>
-                  <div className="font-body text-xs">Stock: ({`${f.stock}`})</div>
+                  <span className="font-body text-xs">
+                    Stock: ({`${f.stock}`})
+                  </span>
+                  <div className="font-body">{displayStar(f.rating)}</div>
                 </div>
-                <div className="font-body">{displayStar(f.rating)}</div>
               </NavLink>
             ))}
           </div>

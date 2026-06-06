@@ -1,6 +1,5 @@
-import React from "react";
 import { Send } from "lucide-react";
-import { NavLink, Link } from "react-router";
+import { NavLink, Link } from "react-router-dom";
 import Images from "../assets/Image";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 

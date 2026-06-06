@@ -1,23 +1,23 @@
-import React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 import displayStar from "../utils/DisplayStar";
 import { CiDeliveryTruck, CiCirclePlus, CiCircleMinus } from "react-icons/ci";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Heart } from "lucide-react";
+import RelatedItems from "./RelatedItems";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { products } = useShop();
   const product = products.find((p) => p.id === Number(id));
+   const [quantity, setQuantity] = useState(0);
 
-  if (!product) return <p>Product not found</p>;
-
-  const [quantity, setQuantity] = useState(0);
+  if (!product) return <p className="flex justify-center">Product not found</p>;
 
   return (
+   <>
     <section className="md:px-5 my-10">
-      <div className="my-max-width w-11/12 mx-auto">
+      <div className="my-max-width w-11/12 mx-auto h-screen">
         <div className="flex flex-col md:flex-row gap-4 h-100">
           <div className="flex-1/6 flex md:flex-col gap-5 order-2 md:order-1 shrink-0">
             {product.images.map((img) => (
@@ -37,7 +37,7 @@ const ProductDetail = () => {
               className="object-contain cursor-pointer"
             />
           </div>
-          <div className="flex-2/5 order-3 bg-gray-100 flex flex-col p-2">
+          <div className="flex-2/6 order-3 flex flex-col p-2">
             <h1 className="font-heading text-lg font-bold mb-1">
               {product.title}
             </h1>
@@ -62,35 +62,46 @@ const ProductDetail = () => {
 
             <div className="flex gap-5 items-center mb-3">
               <div className="flex items-center w-2/5 p-1 gap-2">
-               <button onClick={() => setQuantity(q => Math.max(1, q + 1))}>
-                <CiCirclePlus className="size-6.5"/>
-               </button>
-                <span className="rounded-sm py-1 px-5  border bg-black text-white text-sm">{quantity}</span>
-               <button onClick={() => setQuantity(q => Math.max(1, q - 1))}><CiCircleMinus className="size-6.5"/></button>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setQuantity((q) => Math.max(1, q + 1))}
+                >
+                  <CiCirclePlus className="size-6.5" />
+                </button>
+                <span className="rounded-sm py-1 px-5  border bg-black text-white text-sm">
+                  {quantity}
+                </span>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                >
+                  <CiCircleMinus className="size-6.5" />
+                </button>
               </div>
-              <div className="flex items-center justify-center bg-black rounded-sm w-3/5 p-1">
-                <button className="text-white">Buy Now</button>
+              <div className="flex items-center w-3/5 gap-4">
+                <button className="text-white bg-black p-1 rounded-sm cursor-pointer w-full">Buy Now</button>
+                <button className=" border p-1 rounded-md cursor-pointer"><Heart/></button>
               </div>
             </div>
 
-            <div className="border rounded-xs flex flex-col gap-2">
-              <div className="flex gap-2 items-center px-1">
+            <div className="border rounded-xs flex flex-col">
+              <div className="flex gap-2 items-center p-2">
                 <CiDeliveryTruck className="size-7" />
                 <div>
                   <p className="font-body text-sm">Free Delivery</p>
-                  <p className="font-body text-xs underline">
+                  <p className="font-body text-xs underlin cursor-pointer">
                     Enter your posstal code for delivery
                   </p>
                 </div>
                 <hr />
               </div>
-              <div className="flex gap-2 items-center px-1">
+              <div className="flex gap-2 items-center p-2 border-t">
                 <RotateCcw className="size-7" />
                 <div>
                   <p className="font-body text-sm">Return Delivery</p>
                   <p className="font-body text-xs">
                     Free 30 days delivery returns.{" "}
-                    <span className="underline">Details</span>
+                    <span className="underline cursor-pointer">Details</span>
                   </p>
                 </div>
               </div>
@@ -99,6 +110,9 @@ const ProductDetail = () => {
         </div>
       </div>
     </section>
+    <br />
+    <RelatedItems  category={product.category} currentId={product.id}/>
+   </>
   );
 };
 

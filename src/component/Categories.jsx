@@ -1,4 +1,3 @@
-import React from "react";
 import { useShop } from "../context/ShopContext";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 

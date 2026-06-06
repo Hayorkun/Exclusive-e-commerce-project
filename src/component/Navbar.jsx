@@ -1,29 +1,12 @@
-import React from "react";
+
 import { useState } from "react";
-import { Links, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import {
-  ArrowRight,
-  BriefcaseBusiness,
-  CookingPot,
-  Tablet,
-  HeartPulse,
-  Home,
-  Tv,
-  Shirt,
-  Apple,
-  Computer,
-  Baby,
-  Gamepad,
-  CircleDot,
-} from "lucide-react";
 import { useShop } from "../context/ShopContext";
 
 function Navbar() {
   const [searchBtn, setSearchBtn] = useState(false);
   const [sideBar, setSideBar] = useState(false);
-  const { user } = useAuth();
   const { category } = useShop();
 
   const NavBarLinks = ["Home", "Contact", "About", "Sign up"];
@@ -121,7 +104,7 @@ function Navbar() {
 
       {/* ---MOBILE SEARCH */}
       {searchBtn ? (
-        <div className="flex items-center justify-center bg-gray-200 p-4 border gap-2">
+        <div className="flex items-center justify-center bg-gray-200 p-4 border gap-2 fixed w-full z-10">
           <input
             type="text"
             className="border w-6/12 p-1.5 rounded-3xl"
