@@ -7,8 +7,9 @@ const Footer = () => {
   return (
     <section className="md:px-5 py-10 bg-black text-white">
       <div className="my-max-width w-11/12 mx-auto flex flex-col md:flex-row gap-5 md:gap-10">
-        <div className="">
-          <h1 className="font-heading font-bold text-3xl leading-tight mb-5">
+        <div className="flex-1/5">
+          <div>
+            <h1 className="font-heading font-bold text-3xl leading-tight mb-5">
             Exclusive
           </h1>
           <p className="font-body text-sm mb-3">Subscribe</p>
@@ -16,14 +17,15 @@ const Footer = () => {
             <p className="font-body text-xs mb-1.5">
               Get 10% off your first order
             </p>
-            <div className="flex border border-gray-300 rounded-sm text-sm items-center w-3/5 gap-2 p-1">
+            <div className="flex border border-gray-300 rounded-sm text-sm items-center gap-2 p-1">
               <input type="text" className="outline-0 w-full" />
               <Send className="size-5 text-gray-300" />
             </div>
           </div>
+          </div>
         </div>
 
-        <div className="flex">
+        <div className="flex-3/5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           <div className="">
             <h2 className="font-body font-normal text-base">Support</h2>

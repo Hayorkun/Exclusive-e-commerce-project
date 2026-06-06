@@ -1,22 +1,7 @@
 import { useState } from "react";
-import React from "react";
 import Images from "../assets/Image";
-import {
-  ArrowRight,
-  BriefcaseBusiness,
-  CookingPot,
-  Tablet,
-  HeartPulse,
-  Home,
-  Tv,
-  Shirt,
-  Apple,
-  Computer,
-  Baby,
-  Gamepad,
-  CircleDot,
-} from "lucide-react";
 import { useShop } from "../context/ShopContext"
+import { ArrowRight } from "lucide-react";
 // import { motion, AnimatePresence } from "framer-motion"
 
 function Hero() {

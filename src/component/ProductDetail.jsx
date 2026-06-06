@@ -4,21 +4,22 @@ import { useShop } from "../context/ShopContext";
 import displayStar from "../utils/DisplayStar";
 import { CiDeliveryTruck, CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { RotateCcw, Heart } from "lucide-react";
-import RelatedItems from "./RelatedItems";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { products } = useShop();
   const product = products.find((p) => p.id === Number(id));
-   const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   if (!product) return <p className="flex justify-center">Product not found</p>;
 
   return (
-   <>
-    <section className="md:px-5 my-10">
-      <div className="my-max-width w-11/12 mx-auto h-screen">
-        <div className="flex flex-col md:flex-row gap-4 h-100">
+    <section className="md:px-5 my-7">
+      <div
+        className="my-max-width w-11/12 mx-auto
+      "
+      >
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1/6 flex md:flex-col gap-5 order-2 md:order-1 shrink-0">
             {product.images.map((img) => (
               <div key={img} className="bg-gray-100 p-3">
@@ -61,26 +62,30 @@ const ProductDetail = () => {
             <p className="font-body text-sm mb-2">Brand: {product.brand}</p>
 
             <div className="flex gap-5 items-center mb-3">
-              <div className="flex items-center w-2/5 p-1 gap-2">
+              <div className="flex flex-1/3 items-center gap-1">
                 <button
                   className="cursor-pointer"
                   onClick={() => setQuantity((q) => Math.max(1, q + 1))}
                 >
                   <CiCirclePlus className="size-6.5" />
                 </button>
-                <span className="rounded-sm py-1 px-5  border bg-black text-white text-sm">
+                <span className="rounded-sm py-1 px-3  border bg-black text-white text-sm">
                   {quantity}
                 </span>
                 <button
                   className="cursor-pointer"
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  onClick={() => setQuantity((q) => Math.max(0, q - 1))}
                 >
                   <CiCircleMinus className="size-6.5" />
                 </button>
               </div>
-              <div className="flex items-center w-3/5 gap-4">
-                <button className="text-white bg-black p-1 rounded-sm cursor-pointer w-full">Buy Now</button>
-                <button className=" border p-1 rounded-md cursor-pointer"><Heart/></button>
+              <div className="flex-2/3 flex items-center gap-4">
+                <button className="text-white text-xs bg-black p-1 rounded-sm cursor-pointer w-full">
+                  Buy Now
+                </button>
+                <button className="rounded-md cursor-pointer">
+                  <Heart />
+                </button>
               </div>
             </div>
 
@@ -110,9 +115,6 @@ const ProductDetail = () => {
         </div>
       </div>
     </section>
-    <br />
-    <RelatedItems  category={product.category} currentId={product.id}/>
-   </>
   );
 };
 
