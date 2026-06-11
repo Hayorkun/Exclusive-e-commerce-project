@@ -3,10 +3,11 @@ import { NavLink } from "react-router-dom";
 import { Heart, EyeIcon } from "lucide-react";
 import displayStar from "../utils/DisplayStar";
 
+
 const OurProduct = () => {
   const { products } = useShop();
 
-  return (
+  return ( 
     <section className="md:px-5 my-10">
       <div className="my-max-width w-11/12 mx-auto flex flex-col">
         <div className="mb-5">
@@ -55,8 +56,8 @@ const OurProduct = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section> 
+  )
 };
 
 export default OurProduct;

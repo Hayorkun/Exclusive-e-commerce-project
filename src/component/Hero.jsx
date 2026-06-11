@@ -6,35 +6,36 @@ import { ArrowRight } from "lucide-react";
 
 function Hero() {
 
-  const [openCat, setOpenCat] = useState(false);
-  const { category } = useShop()
+  const [openCat, setOpenCat] = useState(null);
+  const { category, mainCategory } = useShop()
 
   return (
     <>
       <div className="items-center py-5">
         <div className="flex gap-3 my-max-width w-11/12 h-70 md:h-100 mx-auto overflow-visible">
-          <div className="flex-1 bg-white hidden md:block p-2 h-full overflow-visible">
-            <div
+          <div className="flex-1 relative bg-white hidden md:block p-2 h-full overflow-visible">
+             <div
               className="bg-white hidden md:flex flex-col p-2 justify-between relative overflow-visible h-full overflow-y-scroll"
-              onMouseEnter={() => setOpenCat(true)}
-              onMouseLeave={() => setOpenCat(false)}
             >
-              {category.map((c) => (
+              {mainCategory.map((c) => (
                 <button
-                  key={c.category}
+                onMouseEnter={() => setOpenCat(c)}
+              onMouseLeave={() => setOpenCat(null)}
+                  key={c}
                   className="flex gap-2 font-body text-md font-normal p-1 rounded-lg hover:bg-black/20 transition"
                 >
-                  <span>{c.category}</span>
+                  <span>{c}</span>
                 </button>
               ))}
             </div>
           </div>
 
           {openCat && (
-            <div className="absolute top-0 left-full w-72 h-full bg-white shadow-lg border z-50 p-4">
+            <div className=" absolute top-0 left-full w-72 h-full bg-white shadow-lg border z-50 p-4">
               <p className="font-bold text-lg mb-3">All Categories</p>
-              { }
-              {category.map((c) => (
+              {category
+              .filter(sub => sub.category.startsWith(openCat))
+              .map((c) => (
                 <button
                   key={c.category}
                   className="flex gap-2 items-center w-full p-2 hover:bg-gray-100 rounded-lg text-sm"

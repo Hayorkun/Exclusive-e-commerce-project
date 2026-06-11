@@ -12,8 +12,7 @@ function Navbar() {
   const NavBarLinks = ["Home", "Contact", "About", "Sign up"];
 
   const NavlinkStyle = ({ isActive }) => ({
-    backgroundColor: isActive ? "#000" : "transparent",
-    color: isActive ? "#fff" : "#000",
+    textDecoration: isActive ? "underline" : "none"
   });
 
   return (
