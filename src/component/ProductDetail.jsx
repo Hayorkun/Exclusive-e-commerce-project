@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 import displayStar from "../utils/DisplayStar";
@@ -7,11 +6,12 @@ import { RotateCcw, Heart } from "lucide-react";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { products } = useShop();
+  const { products, cart, addToCart, decreaseQuantity } = useShop();
   const product = products.find((p) => p.id === Number(id));
-  const [quantity, setQuantity] = useState(0);
-
   if (!product) return <p className="flex justify-center">Product not found</p>;
+
+  const cartItem = cart.find((item) => item.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   return (
     <section className="md:px-5 my-7">
@@ -65,7 +65,7 @@ const ProductDetail = () => {
               <div className="flex flex-1/3 items-center gap-1">
                 <button
                   className="cursor-pointer"
-                  onClick={() => setQuantity((q) => Math.max(1, q + 1))}
+                  onClick={() => addToCart(product)}
                 >
                   <CiCirclePlus className="size-6.5" />
                 </button>
@@ -74,7 +74,7 @@ const ProductDetail = () => {
                 </span>
                 <button
                   className="cursor-pointer"
-                  onClick={() => setQuantity((q) => Math.max(0, q - 1))}
+                  onClick={() => decreaseQuantity(product.id)}
                 >
                   <CiCircleMinus className="size-6.5" />
                 </button>

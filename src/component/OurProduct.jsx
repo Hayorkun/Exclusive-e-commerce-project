@@ -1,6 +1,6 @@
 import { useShop } from "../context/ShopContext";
 import { NavLink } from "react-router-dom";
-import { Heart, EyeIcon } from "lucide-react";
+import { Heart } from "lucide-react";
 import displayStar from "../utils/DisplayStar";
 
 
@@ -30,12 +30,9 @@ const OurProduct = () => {
                 <div className="flex justify-center bg-gray-100 h-25">
                   <img src={f.images[0]} alt={f.title} className="w-25" />
                   <div className="absolute right-1 top-1">
-                    <span className="">
+                    <button className="">
                       <Heart className="size-4" />
-                    </span>
-                    <span>
-                      <EyeIcon className="size-4" />
-                    </span>
+                    </button>
                   </div>
                 </div>
                 <p className="font-body text-sm leading-4">{f.title}</p>

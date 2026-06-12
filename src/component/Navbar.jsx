@@ -1,18 +1,17 @@
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Search, Heart, ShoppingCart, Menu, X, User} from "lucide-react";
+import { Search, Heart, ShoppingCart, Menu, X, User } from "lucide-react";
 import { useShop } from "../context/ShopContext";
 
 function Navbar() {
   const [searchBtn, setSearchBtn] = useState(false);
   const [sideBar, setSideBar] = useState(false);
-  const { category } = useShop();
+  const { category, cartCount } = useShop();
 
   const NavBarLinks = ["Home", "Contact", "About", "Sign up"];
 
   const NavlinkStyle = ({ isActive }) => ({
-    textDecoration: isActive ? "underline" : "none"
+    textDecoration: isActive ? "underline" : "none",
   });
 
   return (
@@ -72,14 +71,14 @@ function Navbar() {
                 <Heart />
               </button>
 
-              <button className="flex">
+              <NavLink to="/cart" className="flex">
                 <ShoppingCart className="relative" />
-                <span className="-top-3 -right-2 absolute bg-black w-6 h-6 flex justify-center items-center text-xs rounded-full text-white">
-                  17
-                </span>
-              </button>
+                <span className="-top-1 right-11 absolute bg-black w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">{cartCount}</span>
+              </NavLink>
 
-              <NavLink to="./my-profile" ><User/></NavLink>
+              <NavLink to="/my-profile">
+                <User />
+              </NavLink>
             </div>
           </div>
 
@@ -96,11 +95,18 @@ function Navbar() {
               <Heart />
             </button>
 
-            <button>
-              <ShoppingCart />
-            </button>
+            <NavLink to="/cart" className="flex">
+              <ShoppingCart className="relative" />
+              <span className="-top-1 right-11 absolute bg-black w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
+                {cartCount}
+              </span>
+            </NavLink>
 
-             <button><NavLink to="/MyProfile"><User/></NavLink></button>
+            <button>
+              <NavLink to="/my-profile">
+                <User />
+              </NavLink>
+            </button>
           </div>
         </div>
       </nav>
@@ -123,48 +129,48 @@ function Navbar() {
       {/* -----MOBILE SIDEBAR------*/}
       {sideBar && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 top-16 z-40">
-        <div
-          className={`h-full w-7/12 inset-y-0 p-5 left-0 fixed bg-white shadow-lg transform transition-transform duration-300 ease-in-out overflow-scroll
+          <div
+            className={`h-full w-7/12 inset-y-0 p-5 left-0 fixed bg-white shadow-lg transform transition-transform duration-300 ease-in-out overflow-scroll
         ${sideBar ? "translate-x-0" : "-translate-x-full"}`}
-        >
-          <div>
-            <ul className="flex flex-col gap-5">
-              {NavBarLinks.map((links) => (
-                <li key={links}>
-                  <button>
-                    <NavLink
-                      className="px-2 py-1 rounded-full"
-                      style={NavlinkStyle}
-                      to={
-                        links === "Home"
-                          ? "/"
-                          : `/${links.toLowerCase().replace(" ", "-")}`
-                      }
-                    >
-                      {links}
-                    </NavLink>
-                  </button>
-                </li>
+          >
+            <div>
+              <ul className="flex flex-col gap-5">
+                {NavBarLinks.map((links) => (
+                  <li key={links}>
+                    <button>
+                      <NavLink
+                        className="px-2 py-1 rounded-full"
+                        style={NavlinkStyle}
+                        to={
+                          links === "Home"
+                            ? "/"
+                            : `/${links.toLowerCase().replace(" ", "-")}`
+                        }
+                      >
+                        {links}
+                      </NavLink>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-5 h-full flex flex-col border-t">
+              <NavLink className="flex justify-between text-sm mt-2 bg-gray-100 items-center">
+                <p className="font-body ">Our category</p>
+                <>See all</>
+              </NavLink>
+              {category.map((c) => (
+                <button
+                  className="flex mt-3 gap-3 font-body text-md font-normal p-1.5 rounded-lg hover:bg-black/20"
+                  key={c.category}
+                >
+                  <span>{c.category}</span>
+                  {/* <span>{c.title}</span> */}
+                </button>
               ))}
-            </ul>
-          </div>
-          <div className="mt-5 h-full flex flex-col border-t">
-            <NavLink className="flex justify-between text-sm mt-2 bg-gray-100 items-center">
-              <p className="font-body ">Our category</p>
-              <>See all</>
-            </NavLink>
-            {category.map((c) => (
-              <button
-                className="flex mt-3 gap-3 font-body text-md font-normal p-1.5 rounded-lg hover:bg-black/20"
-                key={c.category}
-              >
-                <span>{c.category}</span>
-                {/* <span>{c.title}</span> */}
-              </button>
-            ))}
+            </div>
           </div>
         </div>
-      </div>
       )}
     </>
   );

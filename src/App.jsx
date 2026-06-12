@@ -12,6 +12,7 @@ import MyProfile from "./component/MyProfile";
 import Error from "./component/Error";
 import AddressBook from "./component/AddressBook";
 import ProfileUpdate from "./component/ProfileUpdate";
+import Cart from "./component/Cart"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/cart" element={<Cart/>} />
           <Route path="/my-profile" element={<MyProfile />}>
             <Route path="profile" element={<ProfileUpdate />} />
             <Route path="address-book" element={<AddressBook />} />
