@@ -13,8 +13,10 @@ const Login = () => {
     setFormData({
       ...formData,
       [e.target.value]: e.target.value
-    })
-  }
+    });
+  };
+
+  
 
 
   return (
@@ -47,7 +49,9 @@ const Login = () => {
               className="border-b"
             />
             <div className="flex justify-between items-center text-red-500">
-              <button className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30">
+              <button
+              type="submit"
+              className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30">
                 Create Account
               </button>
               <Link to="/profile" className="font-body text-sm">

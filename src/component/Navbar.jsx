@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react";
+import { Search, Heart, ShoppingCart, Menu, X, User} from "lucide-react";
 import { useShop } from "../context/ShopContext";
 
 function Navbar() {
@@ -78,6 +78,8 @@ function Navbar() {
                   17
                 </span>
               </button>
+
+              <NavLink to="./my-profile" ><User/></NavLink>
             </div>
           </div>
 
@@ -97,6 +99,8 @@ function Navbar() {
             <button>
               <ShoppingCart />
             </button>
+
+             <button><NavLink to="/MyProfile"><User/></NavLink></button>
           </div>
         </div>
       </nav>
