@@ -13,6 +13,7 @@ import Error from "./component/Error";
 import AddressBook from "./component/AddressBook";
 import ProfileUpdate from "./component/ProfileUpdate";
 import Cart from "./component/Cart"
+import Checkout from "./component/Checkout";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="address-book" element={<AddressBook />} />
           </Route>
           <Route path="/error" element={<Error />} />
+          <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>
