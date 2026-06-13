@@ -1,6 +1,6 @@
 const ProfileUpdate = () => {
   return (
-    <div className="h-full shadow-xl bg-gray-50  md:p-5">
+    <div className="h-full shadow-xl bg-gray-50 p-2  md:p-5">
       <form>
         <p className="font-body text-red-400 mb-5">Edit your profile</p>
         <div className="grid grid-cols-2 gap-5 font-body text-sm mb-3">
