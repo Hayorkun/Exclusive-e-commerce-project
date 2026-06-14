@@ -1,10 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 import { ChevronDown, ChevronUp } from "lucide-react";
-
+import { useState } from "react";
 
 const Cart = () => {
-  const { cart, cartCount, cartTotal, increaseQuantity, decreaseQuantity } = useShop();
+  const { cart, cartCount, cartTotal, increaseQuantity, decreaseQuantity } =
+    useShop();
+  const [couponData, setCouponData] = useState({
+    coupon: "",
+  });
+  const [errors, setErrors] = useState({});
 
   if (cart.length === 0)
     return (
@@ -14,6 +19,26 @@ const Cart = () => {
         </h3>
       </div>
     );
+
+  const handleChanges = (c) => {
+    setCouponData({
+      ...couponData,
+      [c.target.name]: c.target.value,
+    });
+  };
+
+  const handleSubmit = (c) => {
+    c.preventDefault();
+
+    let newError = {};
+
+    if (!couponData.coupon.trim()) {
+      newError.coupon = "Enter coupon code";
+    }
+
+    setErrors(newError);
+    if (Object.keys(newError).length > 0) return;
+  };
 
   return (
     <section className="my-12">
@@ -43,24 +68,26 @@ const Cart = () => {
                   <p className="font-body">${e.price}</p>
                   <div className="flex items-center gap-1">
                     <span className="font-body">{e.quantity}</span>
-                   <div>
-                     <ChevronUp
-                    onClick={() => increaseQuantity(e.id)}
-                    className="size-4"/>
-                    <ChevronDown
-                    onClick={() => decreaseQuantity(e.id)}
-                    className="size-4"/>
-                   </div>
+                    <div>
+                      <ChevronUp
+                        onClick={() => increaseQuantity(e.id)}
+                        className="size-4"
+                      />
+                      <ChevronDown
+                        onClick={() => decreaseQuantity(e.id)}
+                        className="size-4"
+                      />
+                    </div>
                   </div>
-                  <p className="font-body">${(e.price * e.quantity).toFixed(2)}</p>
+                  <p className="font-body">
+                    ${(e.price * e.quantity).toFixed(2)}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-between mb-10">
-            <NavLink
-           
-            className="border py-1.5 px-5 text-xs font-body rounded-sm">
+            <NavLink className="border py-1.5 px-5 text-xs font-body rounded-sm">
               Return To Shop
             </NavLink>
             <NavLink className="border py-1.5 px-5 text-xs font-body rounded-sm">
@@ -68,18 +95,28 @@ const Cart = () => {
             </NavLink>
           </div>
           <div className="flex flex-col md:flex-row justify-between">
-            <div className="mb-5 flex h-10 md:w-5/12">
-              <input
-                type="text"
-                placeholder="Coupon Code"
-                className="font-body text-xs w-[65%] px-2 border rounded-xs"
-              />
+            <form onSubmit={handleSubmit} className="mb-5 flex md:w-5/12">
+              <label className="flex flex-col w-[65%]" htmlFor="coupon">
+                <input
+                  type="text"
+                  name="coupon"
+                  id="coupon"
+                  value={couponData.coupon}
+                  onChange={handleChanges}
+                  placeholder="Coupon Code"
+                  className="font-body text-xs p-2 h-10 border rounded-xs"
+                />
+                {errors.coupon && (
+                  <p className="text-red-500 text-xs">{errors.coupon}</p>
+                )}
+              </label>
               <button
-              type="submit"
-              className="ml-5 font-body text-xs w-[35%] bg-red-500 text-white rounded-xs">
+                type="submit"
+                className="ml-5 font-body h-10 text-xs w-[35%] bg-red-500 text-white rounded-xs active:scale-99 ease-in-out transition"
+              >
                 Apply Coupon
               </button>
-            </div>
+            </form>
             <div className="md:w-4/12 p-3 border flex flex-col items-cente">
               <div className="mb-5">
                 <h4 className="font-heading text-sm font-semibold">
@@ -98,8 +135,9 @@ const Cart = () => {
               </div>
 
               <NavLink
-              to="/checkout"
-              className="rounded-xs bg-red-500 text-white text-sm py-1.5 px-4 mx-auto cursor-pointer">
+                to="/checkout"
+                className="rounded-xs bg-red-500 text-white text-sm py-1.5 px-4 mx-auto cursor-pointer"
+              >
                 Proceed to checkout
               </NavLink>
             </div>

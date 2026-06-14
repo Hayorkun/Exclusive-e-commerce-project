@@ -10,6 +10,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    phoneNumber: "",
     password: "",
   });
 
@@ -29,6 +30,9 @@ const Signup = () => {
 
     if (!formData.email.trim()) {
       newError.email = "Email required";
+    }
+    if (!formData.phoneNumber.trim()) {
+      newError.phoneNumber = "Phone number required";
     }
 
     if (!formData.password.trim()) {
@@ -71,32 +75,53 @@ const Signup = () => {
 
           <div className="w-10/12">
             <form onSubmit={handleSubmit} className=" flex flex-col gap-5">
-              <input
+              <label className="flex flex-col text-sm" htmlFor="fullName">Full name
+                <input
                 id="fullName"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
                 type="text"
-                placeholder="Full Name"
+                placeholder="John Doe"
                 className="border-b m-0"
               />
               {errors.fullName && (
-                <p className="text-red-500 font-body text-sm">
+                <p className="text-red-500 font-body text-xs">
                   {errors.fullName}
                 </p>
               )}
-              <input
+              </label>
+
+              <label className="flex flex-col text-sm" htmlFor="email">Email
+                <input
                 id="email"
                 name="email"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Email"
+                placeholder="johndoe@exaple.com"
                 className="border-b"
               />
               {errors.email && (
-                <p className="text-red-500 font-body text-sm">{errors.email}</p>
+                <p className="text-red-500 font-body text-xs">{errors.email}</p>
               )}
+              </label>
+
+             <label className="flex flex-col text-sm" htmlFor="phoneNumer">Phone number
+               <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                placeholder="+000 3552 5244"
+                className="border-b"
+              />
+              {errors.email && (
+                <p className="text-red-500 font-body text-xs">{errors.phoneNumber}</p>
+              )}
+             </label>
+              <label className="flex flex-col text-sm" htmlFor="password">Password
 
               <input
                 id="password"
@@ -104,14 +129,15 @@ const Signup = () => {
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Password"
+                placeholder="******"
                 className="border-b"
               />
               {errors.password && (
-                <p className="text-red-500 font-body text-sm">
+                <p className="text-red-500 font-body text-xs">
                   {errors.password}
                 </p>
               )}
+              </label>
               <button
                 type="submit"
                 className="border p-2.5 bg-red-500 text-white rounded-sm text-sm hover:opacity-90 active:scale-99 transition-all ease-in-out"
@@ -119,8 +145,9 @@ const Signup = () => {
                 Create Account
               </button>
               <button
-              type="button"
-              className="border p-3 rounded-sm text-xs flex items-center justify-center gap-2 mb-4 active:scale-99 transition ease-in-out">
+                type="button"
+                className="border p-3 rounded-sm text-xs flex items-center justify-center gap-2 mb-4 active:scale-99 transition ease-in-out"
+              >
                 <FaGoogle />
                 Sign Up with Google
               </button>

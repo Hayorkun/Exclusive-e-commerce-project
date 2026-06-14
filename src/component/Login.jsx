@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import Images from "../assets/Image";
-import { db } from "../services/Firebase";
+// import { db } from "../services/Firebase";
 import { useState } from "react";
 
 const Login = () => {
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,12 +13,27 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.value]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    let newError = {};
+
+    if (!formData.email.trim()) {
+      newError.email = "Email required";
+    }
+
+    if (!formData.password.trim()) {
+      newError.password = "Password required";
+    }
+
+    setErrors(newError);
+
+    if (Object.keys(newError).length > 0) return;
+  };
 
   return (
     <section className="my-12">
@@ -37,27 +53,46 @@ const Login = () => {
             <p className="font-body text-sm">Enter your details below</p>
           </div>
 
-          <div className="w-10/12 flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Email or Phone Number"
-              className="border-b"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="border-b"
-            />
-            <div className="flex justify-between items-center text-red-500">
-              <button
-              type="submit"
-              className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30">
-                Create Account
-              </button>
-              <Link to="/profile" className="font-body text-sm">
-                Forgot password?
-              </Link>
-            </div>
+          <div className="w-10/12">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="text"
+                placeholder="Email or Phone Number"
+                className="border-b"
+              />
+              {errors.email && (
+                <p className="text-red-500 font-body text-sm">{errors.email}</p>
+              )}
+              <input
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                type="password"
+                placeholder="Password"
+                className="border-b"
+              />
+              {errors.password && (
+                <p className="text-red-500 font-body text-sm">
+                  {errors.password}
+                </p>
+              )}
+              <div className="flex justify-between items-center text-red-500">
+                <button
+                  type="submit"
+                  className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30"
+                >
+                  Log in
+                </button>
+                <Link to="/profile" className="font-body text-sm">
+                  Forgot password?
+                </Link>
+              </div>
+            </form>
           </div>
         </div>
       </div>
