@@ -177,7 +177,7 @@ const ProfileUpdate = () => {
           </label>
         </div>
         <div className="flex justify-center md:justify-end-safe gap-5">
-          <button className="font-body text-sm py-2 px-4 bg-gray-200 rounded-sm active:scale-98">
+          <button type="reset" className="font-body text-sm py-2 px-4 bg-gray-200 rounded-sm active:scale-98">
             Cancel
           </button>
           <button className="font-body text-sm py-2 px-6 bg-red-500 text-white rounded-sm active:scale-98">

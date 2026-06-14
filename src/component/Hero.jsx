@@ -9,7 +9,7 @@ function Hero() {
 
   return (
     <>
-      <div className="my-10">
+      <div className="my-10 border">
         <div className="flex gap-3 my-max-width w-11/12 mx-auto h-100">
           <div className="flex-1 border border-gray-200 bg-white hidden md:block p-2 relative" onMouseLeave={() => setOpenCat(null)}>
             <div
@@ -47,7 +47,7 @@ function Hero() {
 
           <div className="flex-3 border h-full">
             <div className="flex flex-col md:flex-row md:gap-0 text-white bg-black h-full p-5 md:p-10">
-              <div className="flex-2 flex flex-col mb-1">
+              <div className="flex-2 flex flex-col h-[40%]">
                 <div className="flex gap-3 items-center mb-5 md:mb-10">
                   <img
                     className="w-7"
@@ -69,7 +69,7 @@ function Hero() {
                   </button>
                 </div>
               </div>
-              <div className="flex-2">
+              <div className="flex-2 h-[60%]">
                 <img className="h-full object-contain" src={Images.Iphone14} alt="Iphone 14" />
               </div>
             </div>
