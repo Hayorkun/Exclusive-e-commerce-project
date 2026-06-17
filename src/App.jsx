@@ -15,6 +15,7 @@ import AddressBook from "./component/AddressBook";
 import ProfileUpdate from "./component/ProfileUpdate";
 import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
+import ProtectedRoute from "./component/ProtectedRoute";
 
 function App() {
   return (
@@ -30,12 +31,14 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/my-profile" element={<MyProfile />}>
-            <Route path="profile" element={<ProfileUpdate />} />
-            <Route path="address-book" element={<AddressBook />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/my-profile" element={<MyProfile />}>
+              <Route path="profile" element={<ProfileUpdate />} />
+              <Route path="address-book" element={<AddressBook />} />
+            </Route>
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
           <Route path="/error" element={<Error />} />
-          <Route path="/checkout" element={<Checkout />} />
         </Routes>
         <Footer />
       </BrowserRouter>

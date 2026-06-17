@@ -9,41 +9,40 @@ function Hero() {
 
   return (
     <>
-      <div className="my-10 border">
+      <div className="my-10">
         <div className="flex gap-3 my-max-width w-11/12 mx-auto h-100">
-          <div className="flex-1 border border-gray-200 bg-white hidden md:block p-2 relative" onMouseLeave={() => setOpenCat(null)}>
-            <div
-            className="bg-white hidden md:flex flex-col p-1 justify-between overflow-y-scroll h-full">
+          <div
+            className="flex-1 border border-gray-200 bg-white hidden md:block p-2 relative"
+            onMouseLeave={() => setOpenCat(null)}
+          >
+            <div className="bg-white hidden md:flex flex-col p-1 justify-between overflow-y-scroll h-full">
               {mainCategory.map((c) => (
                 <button
-                   
                   onMouseEnter={() => setOpenCat(c)}
                   key={c}
                   className="flex gap-2 font-body text-md font-normal p-1 rounded-lg hover:bg-black/20 transition"
                 >
                   <span>{c}</span>
                 </button>
-               ))}
+              ))}
             </div>
 
             {openCat && (
-            <div className="ml-3 absolute top-0 left-full w-65 bg-white shadow-lg border z-50 p-4">
-              <p className="font-bold text-md mb-3">All Categories</p>
-              {category
-                .filter((sub) => sub.category.startsWith(openCat))
-                .map((c) => (
-                  <button
-                    key={c.category}
-                    className="flex gap-2 items-center w-full p-2 hover:bg-gray-100 rounded-lg text-sm"
-                  >
-                    <span>{c.category}</span>
-                  </button>
-                ))}
-            </div>
-          )}
+              <div className="ml-3 absolute top-0 left-full w-65 bg-white shadow-lg border z-50 p-4">
+                <p className="font-bold text-md mb-3">All Categories</p>
+                {category
+                  .filter((sub) => sub.category.startsWith(openCat))
+                  .map((c) => (
+                    <button
+                      key={c.category}
+                      className="flex gap-2 items-center w-full p-2 hover:bg-gray-100 rounded-lg text-sm"
+                    >
+                      <span>{c.category}</span>
+                    </button>
+                  ))}
+              </div>
+            )}
           </div>
-
-          
 
           <div className="flex-3 border h-full">
             <div className="flex flex-col md:flex-row md:gap-0 text-white bg-black h-full p-5 md:p-10">
@@ -69,8 +68,12 @@ function Hero() {
                   </button>
                 </div>
               </div>
-              <div className="flex-2 h-[60%]">
-                <img className="h-full object-contain" src={Images.Iphone14} alt="Iphone 14" />
+              <div className="flex-2 h-[60%] md:h-full flex justify-center md:items-center md:justify-center">
+                <img
+                  className="h-full object-contain object-center"
+                  src={Images.Iphone14}
+                  alt="Iphone 14"
+                />
               </div>
             </div>
           </div>

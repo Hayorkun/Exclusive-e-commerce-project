@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 import displayStar from "../utils/DisplayStar";
 import { CiDeliveryTruck, CiCirclePlus, CiCircleMinus } from "react-icons/ci";
@@ -79,10 +79,10 @@ const ProductDetail = () => {
                   <CiCircleMinus className="size-6.5" />
                 </button>
               </div>
-              <div className="flex-2/3 flex items-center gap-4">
-                <button className="text-white text-xs bg-black p-1 rounded-sm cursor-pointer w-full">
+              <div className="flex-2/3 flex items-center justify-end gap-4">
+                <NavLink to="/checkout" className="text-white text-xs bg-black p-2 rounded-sm cursor-pointer w-[50%] text-center active:scale-99">
                   Buy Now
-                </button>
+                </NavLink>
                 <button className="rounded-md cursor-pointer">
                   <Heart />
                 </button>

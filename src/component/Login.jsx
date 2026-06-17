@@ -1,9 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Images from "../assets/Image";
 // import { db } from "../services/Firebase";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { FaSpinner } from "react-icons/fa";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { logIn } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: "",
@@ -17,7 +22,7 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newError = {};
@@ -33,6 +38,18 @@ const Login = () => {
     setErrors(newError);
 
     if (Object.keys(newError).length > 0) return;
+
+    try {
+      setLoading(true);
+
+      await logIn(formData.email, formData.password);
+
+      navigate("/");
+    } catch (error) {
+      setErrors({ general: error.originalError.code });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,7 +69,11 @@ const Login = () => {
             </h1>
             <p className="font-body text-sm">Enter your details below</p>
           </div>
-
+          {errors.general && (
+            <p className="text-red-500 text-xs font-body mb-5">
+              {errors.general}
+            </p>
+          )}
           <div className="w-10/12">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
@@ -84,9 +105,10 @@ const Login = () => {
               <div className="flex justify-between items-center text-red-500">
                 <button
                   type="submit"
-                  className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30"
+                  disabled={loading}
+                  className="border p-2.5 bg-red-500 text-white rounded-sm text-xs w-30 active:scale-98 ease-in-out transition"
                 >
-                  Log in
+                  {loading ? <FaSpinner /> : "Log in"}
                 </button>
                 <Link to="/profile" className="font-body text-sm">
                   Forgot password?

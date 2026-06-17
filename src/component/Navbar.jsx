@@ -14,6 +14,8 @@ function Navbar() {
     textDecoration: isActive ? "underline" : "none",
   });
 
+  
+
   return (
     <>
       <nav className="border-b items-center py-4 sticky top-0 z-50 bg-white">

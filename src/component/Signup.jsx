@@ -1,11 +1,15 @@
 import Images from "../assets/Image";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { db } from "../services/Firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
+
+  const navigate = useNavigate()
+
+  const { signUp } = useAuth();
+
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,7 +25,7 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let newError = {};
     if (!formData.fullName.trim()) {
@@ -42,16 +46,17 @@ const Signup = () => {
     setErrors(newError);
 
     if (Object.keys(newError).length > 0) return;
-    createAccount();
-  };
 
-  const createAccount = async () => {
     try {
-      const docRef = await addDoc(collection(db, "users"), formData);
-
-      console.log("Document saved succesfully", docRef.id);
+       await signUp(
+      formData.fullName,
+      formData.email,
+      formData.phoneNumber,
+      formData.password,
+    );
+      navigate("/")
     } catch (error) {
-      console.log("Error adding document to firebase", error);
+      setErrors({general: error.originalError.code})
     }
   };
 
@@ -74,69 +79,80 @@ const Signup = () => {
           </div>
 
           <div className="w-10/12">
+            {errors.general && (
+                  <p className="text-red-500 text-xs font-body">{errors.general}</p>
+                )}
             <form onSubmit={handleSubmit} className=" flex flex-col gap-5">
-              <label className="flex flex-col text-sm" htmlFor="fullName">Full name
+              <label className="flex flex-col text-sm" htmlFor="fullName">
+                Full name
                 <input
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                type="text"
-                placeholder="John Doe"
-                className="border-b m-0"
-              />
-              {errors.fullName && (
-                <p className="text-red-500 font-body text-xs">
-                  {errors.fullName}
-                </p>
-              )}
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="John Doe"
+                  className="border-b m-0"
+                />
+                {errors.fullName && (
+                  <p className="text-red-500 font-body text-xs">
+                    {errors.fullName}
+                  </p>
+                )}
               </label>
 
-              <label className="flex flex-col text-sm" htmlFor="email">Email
+              <label className="flex flex-col text-sm" htmlFor="email">
+                Email
                 <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="johndoe@exaple.com"
-                className="border-b"
-              />
-              {errors.email && (
-                <p className="text-red-500 font-body text-xs">{errors.email}</p>
-              )}
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="johndoe@exaple.com"
+                  className="border-b"
+                />
+                {errors.email && (
+                  <p className="text-red-500 font-body text-xs">
+                    {errors.email}
+                  </p>
+                )}
               </label>
 
-             <label className="flex flex-col text-sm" htmlFor="phoneNumer">Phone number
-               <input
-                id="phoneNumber"
-                name="phoneNumber"
-                type="tel"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="+000 3552 5244"
-                className="border-b"
-              />
-              {errors.email && (
-                <p className="text-red-500 font-body text-xs">{errors.phoneNumber}</p>
-              )}
-             </label>
-              <label className="flex flex-col text-sm" htmlFor="password">Password
+              <label className="flex flex-col text-sm" htmlFor="phoneNumer">
+                Phone number
+                <input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="tel"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  placeholder="+000 3552 5244"
+                  className="border-b"
+                />
+                {errors.phoneNumber && (
+                  <p className="text-red-500 font-body text-xs">
+                    {errors.phoneNumber}
+                  </p>
+                )}
+              </label>
 
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="******"
-                className="border-b"
-              />
-              {errors.password && (
-                <p className="text-red-500 font-body text-xs">
-                  {errors.password}
-                </p>
-              )}
+              <label className="flex flex-col text-sm" htmlFor="password">
+                Password
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="******"
+                  className="border-b"
+                />
+                {errors.password && (
+                  <p className="text-red-500 font-body text-xs">
+                    {errors.password}
+                  </p>
+                )}
               </label>
               <button
                 type="submit"
