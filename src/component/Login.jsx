@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Images from "../assets/Image";
 // import { db } from "../services/Firebase";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { FaSpinner } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation()
   const { logIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -14,6 +15,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleChange = (e) => {
     setFormData({
@@ -44,7 +47,7 @@ const Login = () => {
 
       await logIn(formData.email, formData.password);
 
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       setErrors({ general: error.originalError.code });
     } finally {

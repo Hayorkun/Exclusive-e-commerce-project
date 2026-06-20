@@ -4,7 +4,7 @@ import { Heart } from "lucide-react";
 import displayStar from "../utils/DisplayStar";
 
 const OurProduct = () => {
-  const { products } = useShop();
+  const { products, toggleWishList, wishList } = useShop();
 
   return (
     <section className="md:px-5 my-10">
@@ -20,30 +20,41 @@ const OurProduct = () => {
         </div>
         <div className="">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 px-3">
-            {products.slice(0, 20).map((f) => (
-              <NavLink
-                to={`/product/${f.id}`}
-                key={f.id}
-                className="h-40 relative"
-              >
-                <div className="flex justify-center bg-gray-100 h-25">
-                  <img src={f.images[0]} alt={f.title} className="w-25" />
-                  <div className="absolute right-1 top-1">
-                    <button className="">
-                      <Heart className="size-4" />
+            {products.slice(0, 16).map((f) => {
+              const isWishlisted = wishList?.some(
+                (item) => item.id === f.id,
+              );
+              return (
+                <div key={f.id} className="h-40 relative">
+                  <NavLink
+                    to={`/product/${f.id}`}
+                    className="flex justify-center bg-gray-100 h-25"
+                  >
+                    <img src={f.images[0]} alt={f.title} className="w-25" />
+                  </NavLink>
+                  <div className="absolute right-1 top-1 w-fit">
+                    <button
+                      onClick={() => toggleWishList(f)}
+                      className="cursor-pointer"
+                    >
+                      {isWishlisted ? (
+                        <Heart className="fill-red-500 stroke-red-500" />
+                      ) : (
+                        <Heart />
+                      )}
                     </button>
                   </div>
+                  <p className="font-body text-sm leading-4">{f.title}</p>
+                  <p className="font-body text-xs">{`$${f.price}`}</p>
+                  <div className="flex items-center gap-3">
+                    <span className="font-body text-xs">
+                      Stock: ({`${f.stock}`})
+                    </span>
+                    <div className="font-body">{displayStar(f.rating)}</div>
+                  </div>
                 </div>
-                <p className="font-body text-sm leading-4">{f.title}</p>
-                <p className="font-body text-xs">{`$${f.price}`}</p>
-                <div className="flex items-center gap-3">
-                  <span className="font-body text-xs">
-                    Stock: ({`${f.stock}`})
-                  </span>
-                  <div className="font-body">{displayStar(f.rating)}</div>
-                </div>
-              </NavLink>
-            ))}
+              );
+            })}
           </div>
           <div className="flex justify-center mt-5">
             <button className="bg-black text-white px-4 py-2">

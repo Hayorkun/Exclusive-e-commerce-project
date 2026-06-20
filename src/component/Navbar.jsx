@@ -6,15 +6,13 @@ import { useShop } from "../context/ShopContext";
 function Navbar() {
   const [searchBtn, setSearchBtn] = useState(false);
   const [sideBar, setSideBar] = useState(false);
-  const { category, cartCount } = useShop();
+  const { category, cartCount, wishListCount } = useShop();
 
   const NavBarLinks = ["Home", "Contact", "About", "Sign up"];
 
   const NavlinkStyle = ({ isActive }) => ({
     textDecoration: isActive ? "underline" : "none",
   });
-
-  
 
   return (
     <>
@@ -69,13 +67,18 @@ function Navbar() {
                 </button>
               </div>
 
-              <button>
-                <Heart />
-              </button>
+              <NavLink to="/wishlist">
+                <Heart className="relative" />
+                <span className="-top-1 right-21 absolute bg-red-500 w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
+                  {wishListCount}
+                </span>
+              </NavLink>
 
               <NavLink to="/cart" className="flex">
                 <ShoppingCart className="relative" />
-                <span className="-top-1 right-11 absolute bg-black w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">{cartCount}</span>
+                <span className="-top-1 right-10 absolute bg-red-500 w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
+                  {cartCount}
+                </span>
               </NavLink>
 
               <NavLink to="/my-profile">
@@ -93,13 +96,16 @@ function Navbar() {
               {searchBtn ? <X /> : <Search />}
             </button>
 
-            <button>
-              <Heart />
-            </button>
+            <NavLink to="/wishlist">
+              <Heart className="relative" />
+              <span className="-top-1 right-21 absolute bg-red-500 w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
+                {wishListCount}
+              </span>
+            </NavLink>
 
             <NavLink to="/cart" className="flex">
               <ShoppingCart className="relative" />
-              <span className="-top-1 right-11 absolute bg-black w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
+              <span className="-top-1.5 right-10 absolute bg-red-500 w-4 h-4 flex justify-center items-center text-xs rounded-full text-white">
                 {cartCount}
               </span>
             </NavLink>

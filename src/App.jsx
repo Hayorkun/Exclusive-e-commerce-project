@@ -16,6 +16,7 @@ import ProfileUpdate from "./component/ProfileUpdate";
 import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
 import ProtectedRoute from "./component/ProtectedRoute";
+import Wishlist from "./component/Wishlist";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist/>}/>
           <Route element={<ProtectedRoute />}>
             <Route path="/my-profile" element={<MyProfile />}>
               <Route path="profile" element={<ProfileUpdate />} />

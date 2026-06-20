@@ -6,12 +6,25 @@ import { RotateCcw, Heart } from "lucide-react";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { products, cart, addToCart, decreaseQuantity } = useShop();
+  const {
+    products,
+    cart,
+    addToCart,
+    decreaseQuantity,
+    toggleWishList,
+    wishList,
+  } = useShop();
   const product = products.find((p) => p.id === Number(id));
   if (!product) return <p className="flex justify-center">Product not found</p>;
 
   const cartItem = cart.find((item) => item.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
+  const isWishlisted = wishList?.some((item) => item.id === product.id);
+  const wishListed = isWishlisted ? (
+    <Heart className="fill-red-500 stroke-red-500" />
+  ) : (
+    <Heart />
+  );
 
   return (
     <section className="md:px-5 my-7">
@@ -80,11 +93,18 @@ const ProductDetail = () => {
                 </button>
               </div>
               <div className="flex-2/3 flex items-center justify-end gap-4">
-                <NavLink to="/checkout" className="text-white text-xs bg-black p-2 rounded-sm cursor-pointer w-[50%] text-center active:scale-99">
+                <NavLink
+                onClick={() => addToCart(product)}
+                  to="/checkout"
+                  className="text-white text-xs bg-black p-2 rounded-sm cursor-pointer w-[50%] text-center active:scale-99"
+                >
                   Buy Now
                 </NavLink>
-                <button className="rounded-md cursor-pointer">
-                  <Heart />
+                <button
+                  onClick={() => toggleWishList(product)}
+                  className="rounded-md cursor-pointer"
+                >
+                  {wishListed}
                 </button>
               </div>
             </div>
