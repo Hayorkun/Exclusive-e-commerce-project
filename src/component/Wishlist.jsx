@@ -22,7 +22,7 @@ const Wishlist = () => {
           <p className="text-sm">
             Wishlist (<span>{wishListCount}</span>)
           </p>
-          <button className="text-sm border border-gray-400 py-1 px-3">
+          <button className="text-sm border border-gray-400 py-1 px-3 cursor-pointer">
             Move all to bag
           </button>
         </div>
@@ -39,7 +39,12 @@ const Wishlist = () => {
                   className="w-25 object-contain"
                 />
               </NavLink>
-              <button className="cursor-pointer" onClick={() => removeWishItem(w.id)}><Trash className="absolute top-2 right-2 size-5"/></button>
+              <button
+                className="cursor-pointer"
+                onClick={() => removeWishItem(w.id)}
+              >
+                <Trash className="absolute top-2 right-2 size-5" />
+              </button>
               <div className="p-1">
                 <h3 className="font-heading text-sm ">{w.title}</h3>
                 <p className="font-body text-sm">${w.price}</p>

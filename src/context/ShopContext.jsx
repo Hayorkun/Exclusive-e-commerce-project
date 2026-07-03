@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { collection, serverTimestamp, addDoc } from "firebase/firestore";
+import { db } from "../services/Firebase";
 
 const ShopContext = createContext();
 
@@ -86,7 +88,7 @@ export const ShopProvider = ({ children }) => {
         id: product.id,
         title: product.title,
         price: product.price,
-        image: product.images[0],
+        image: product.images ? product.images[0] : product.image,
         discount: product.discountPercentage,
         quantity: 1,
       };
@@ -133,7 +135,7 @@ export const ShopProvider = ({ children }) => {
       const newItem = {
         id: product.id,
         title: product.title,
-        image: product.images[0],
+        image: product.images ? product.images[0] : product.image,
         price: product.price,
       };
       setWishList([...wishList, newItem]);
@@ -146,13 +148,36 @@ export const ShopProvider = ({ children }) => {
     setWishList((wishList) => wishList.filter((item) => item.id !== id));
   }
 
-  function clearCart () {
-    setCart([])
+  function clearCart() {
+    setCart([]);
   }
+
+  const placeOrder = async (uid, formData, paymentMethod) => {
+    try {
+      const ordersRef = collection(db, "orders");
+      const orderDocRef = await addDoc(ordersRef, {
+        userId: uid,
+        billingDetails: formData,
+        paymentMethod: paymentMethod,
+        cart: cart,
+        cartTotal: cartTotal,
+        createdAt: serverTimestamp(),
+        status: "Pending",
+      });
+
+      console.log(`order successfully placed with ID: ${orderDocRef.id}`);
+
+      clearCart();
+    } catch (error) {
+      console.error("error saving order to firestore: ", error);
+      throw error;
+    }
+  };
 
   return (
     <ShopContext.Provider
       value={{
+        placeOrder,
         products,
         isError,
         category,

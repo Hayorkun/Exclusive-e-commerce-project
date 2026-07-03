@@ -5,6 +5,7 @@ import QrCode from './e-comerce_qrcode.png'
 import AppStore from './appstore.png'
 import GoogleStore from './GogleStore.png'
 import SignupCart from './signup-cart.png'
+import AfricanShoppers from './Africanfemaleshoppers.png'
 
 
 const Images = {
@@ -14,7 +15,8 @@ const Images = {
   QrCode,
   AppStore,
   GoogleStore,
-  SignupCart
+  SignupCart,
+  AfricanShoppers,
 }
 
 export default Images

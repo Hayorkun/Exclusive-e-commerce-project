@@ -17,6 +17,7 @@ import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
 import ProtectedRoute from "./component/ProtectedRoute";
 import Wishlist from "./component/Wishlist";
+import OrderSuccess from "./component/OrderSuccess";
 
 function App() {
   return (
@@ -32,15 +33,16 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/wishlist" element={<Wishlist/>}/>
           <Route element={<ProtectedRoute />}>
             <Route path="/my-profile" element={<MyProfile />}>
               <Route path="profile" element={<ProfileUpdate />} />
               <Route path="address-book" element={<AddressBook />} />
             </Route>
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/wishlist" element={<Wishlist />} />
           </Route>
           <Route path="/error" element={<Error />} />
+          <Route path="/order-success" element={<OrderSuccess/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>

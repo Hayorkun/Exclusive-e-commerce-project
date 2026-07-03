@@ -8,14 +8,13 @@ import {
 import { auth, db } from "../services/Firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { signOut as firebaseSignOut } from "firebase/auth"
+import { signOut as firebaseSignOut } from "firebase/auth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {

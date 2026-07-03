@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useShop } from "../context/ShopContext";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { user } = useAuth()
-   const { cart, cartTotal } = useShop();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { cart, cartTotal, placeOrder } = useShop();
   const [paymentMethod, setPaymentMethod] = useState("");
   const [errors, setErrors] = useState({});
+  const [isSubmittng, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
@@ -26,7 +29,7 @@ const Checkout = () => {
     });
   };
 
-  const handleSubmit = (d) => {
+  const handleSubmit = async (d) => {
     d.preventDefault();
 
     let newError = {};
@@ -46,7 +49,7 @@ const Checkout = () => {
       newError.town = "Town required";
     }
     if (!formData.phoneNumber.trim()) {
-      newError.phoneNumnber = "Phone number required";
+      newError.phoneNumber = "Phone number required";
     }
     if (!formData.email.trim()) {
       newError.email = "Email required";
@@ -59,6 +62,20 @@ const Checkout = () => {
     }
 
     setErrors(newError);
+
+    if (Object.keys(newError).length === 0) {
+      try {
+        setIsSubmitting(true);
+        await placeOrder(user?.uid, formData, paymentMethod);
+        navigate("/order-success");
+      } catch (error) {
+        alert(
+          "Something went wrong while processing your order. Please try again.", error
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
   };
 
   if (cart.length === 0) {
@@ -211,10 +228,10 @@ const Checkout = () => {
                 )}
               </label>
               <label
-                htmlFor="checkbox"
+                htmlFor="saveInfo"
                 className="flex gap-2 font-body text-sm"
               >
-                <input type="checkbox" />
+                <input type="checkbox" id="saveInfo"/>
                 Save this information for faster check-out next time
               </label>
             </div>
@@ -265,7 +282,11 @@ const Checkout = () => {
                     />
                     Cash on Delivery
                   </label>
-                  {errors.paymentMethod && <p className="font-body text-xs text-red-500">{errors.paymentMethod}</p>}
+                  {errors.paymentMethod && (
+                    <p className="font-body text-xs text-red-500">
+                      {errors.paymentMethod}
+                    </p>
+                  )}
                 </div>
                 <div className="flex gap-5 mb-3">
                   <div className="w-[60%]">
@@ -294,6 +315,7 @@ const Checkout = () => {
                 </div>
                 <button
                   type="submit"
+                  disabled={isSubmittng}
                   className="bg-red-500 text-white w-[30%] py-2 rounded-sm active:scale-99 "
                 >
                   Place order

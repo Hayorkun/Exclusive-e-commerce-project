@@ -8,7 +8,7 @@ const MyProfile = () => {
   const navStyle = ({ isActive }) => ({
     color: isActive ? "red" : "black",
   });
- 
+
   return (
     <section className="my-12">
       <div className="my-max-width w-11/12 mx-auto h-full">

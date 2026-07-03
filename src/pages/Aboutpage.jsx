@@ -1,8 +1,11 @@
+import About from "../component/About"
 
 
 function Aboutpage() {
   return (
-    <div>Aboutpage</div>
+    <>
+    <About/>
+    </>
   )
 }
 
