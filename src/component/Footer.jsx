@@ -73,11 +73,13 @@ const Footer = () => {
                   <img className="w-20" src={Images.AppStore} alt="" />
                 </div>
               </div>
-              <div className="mt-3 flex justify-between size-20">
-                <SiFacebook />
-                <SiInstagram />
-                <SiFacebook />
-                <SiInstagram />
+              <div className="mt-3 flex justify-between gap-3">
+                <a href="#" className="text-white hover:opacity-75">
+                  <SiFacebook />
+                </a>
+                <a href="#" className="text-white hover:opacity-75">
+                  <SiInstagram />
+                </a>
               </div>
             </div>
           </div>

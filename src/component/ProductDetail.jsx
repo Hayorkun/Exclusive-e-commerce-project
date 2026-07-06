@@ -63,7 +63,7 @@ const ProductDetail = () => {
                 </p>
               </div>
               <hr className="border border-gray-400 h-3 flex items-center" />
-              <p className="fot-body text-xs text-green-400">
+              <p className="font-body text-xs text-green-400">
                 {product.availabilityStatus}
               </p>
             </div>

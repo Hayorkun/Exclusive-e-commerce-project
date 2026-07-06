@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { signUp } = useAuth();
 
@@ -48,15 +47,43 @@ const Signup = () => {
     if (Object.keys(newError).length > 0) return;
 
     try {
-       await signUp(
-      formData.fullName,
-      formData.email,
-      formData.phoneNumber,
-      formData.password,
-    );
-      navigate("/")
+      await signUp(
+        formData.fullName,
+        formData.email,
+        formData.phoneNumber,
+        formData.password,
+      );
+      navigate("/");
     } catch (error) {
-      setErrors({general: error.originalError.code})
+      let backendErrors = {};
+      switch (error.code) {
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+          backendErrors.currentPassword =
+            "The current password you entered is incorrect.";
+          break;
+        case "auth/email-already-in-use":
+          backendErrors.email =
+            "This email address is already registered to another account.";
+          break;
+        case "auth/invalid-email":
+          backendErrors.email =
+            "Please enter a valid email address structure (e.g., name@example.com).";
+          break;
+        case "auth/weak-password":
+          backendErrors.newPassword =
+            "The new password must be at least 6 characters long.";
+          break;
+        case "auth/requires-recent-login":
+          backendErrors.general =
+            "For security reasons, please log out and log back in before making these changes.";
+          break;
+        default:
+          // Fallback for unexpected network or database issues
+          backendErrors.general =
+            error.message || "An unexpected error occurred. Please try again.";
+      }
+      setErrors(backendErrors);
     }
   };
 
@@ -80,8 +107,8 @@ const Signup = () => {
 
           <div className="w-10/12">
             {errors.general && (
-                  <p className="text-red-500 text-xs font-body">{errors.general}</p>
-                )}
+              <p className="text-red-500 text-xs font-body">{errors.general}</p>
+            )}
             <form onSubmit={handleSubmit} className=" flex flex-col gap-5">
               <label className="flex flex-col text-sm" htmlFor="fullName">
                 Full name
@@ -119,7 +146,7 @@ const Signup = () => {
                 )}
               </label>
 
-              <label className="flex flex-col text-sm" htmlFor="phoneNumer">
+              <label className="flex flex-col text-sm" htmlFor="phoneNumber">
                 Phone number
                 <input
                   id="phoneNumber"

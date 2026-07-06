@@ -73,7 +73,7 @@ export const ShopProvider = ({ children }) => {
   }, [wishList]);
 
   function addToCart(product) {
-    const existingItems = cart.find((item) => item.id == product.id);
+    const existingItems = cart.find((item) => item.id === product.id);
 
     if (existingItems) {
       setCart(
@@ -125,7 +125,7 @@ export const ShopProvider = ({ children }) => {
   );
 
   function toggleWishList(product) {
-    const existingItems = wishList.find((item) => item.id == product.id);
+    const existingItems = wishList.find((item) => item.id === product.id);
 
     if (existingItems) {
       setWishList((wishlist) =>

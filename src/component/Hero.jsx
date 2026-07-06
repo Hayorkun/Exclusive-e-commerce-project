@@ -2,6 +2,7 @@ import { useState } from "react";
 import Images from "../assets/Image";
 import { useShop } from "../context/ShopContext";
 import { ArrowRight } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 function Hero() {
   const [openCat, setOpenCat] = useState(null);
@@ -63,9 +64,9 @@ function Hero() {
                     Up to 10% off voucher
                   </h1>
 
-                  <button className="flex gap-0.5 items-center font-body underline decoration-solid text-md font-light">
+                  <NavLink to="/" className="flex gap-0.5 items-center font-body underline decoration-solid text-md font-light">
                     Shop now <ArrowRight className="size-4 mt-1" />
-                  </button>
+                  </NavLink>
                 </div>
               </div>
               <div className="flex-2 h-[60%] md:h-full flex justify-center md:items-center md:justify-center">

@@ -10,7 +10,7 @@ const Checkout = () => {
   const { cart, cartTotal, placeOrder } = useShop();
   const [paymentMethod, setPaymentMethod] = useState("");
   const [errors, setErrors] = useState({});
-  const [isSubmittng, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
@@ -70,7 +70,7 @@ const Checkout = () => {
         navigate("/order-success");
       } catch (error) {
         alert(
-          "Something went wrong while processing your order. Please try again.", error
+          "Something went wrong while processing your order. Please try again."
         );
       } finally {
         setIsSubmitting(false);
@@ -315,7 +315,7 @@ const Checkout = () => {
                 </div>
                 <button
                   type="submit"
-                  disabled={isSubmittng}
+                  disabled={isSubmitting}
                   className="bg-red-500 text-white w-[30%] py-2 rounded-sm active:scale-99 "
                 >
                   Place order

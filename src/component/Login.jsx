@@ -49,7 +49,35 @@ const Login = () => {
 
       navigate(from, { replace: true });
     } catch (error) {
-      setErrors({ general: error.originalError.code });
+      let backendErrors = {};
+      switch (error.code) {
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+          backendErrors.currentPassword =
+            "The current password you entered is incorrect.";
+          break;
+        case "auth/email-already-in-use":
+          backendErrors.email =
+            "This email address is already registered to another account.";
+          break;
+        case "auth/invalid-email":
+          backendErrors.email =
+            "Please enter a valid email address structure (e.g., name@example.com).";
+          break;
+        case "auth/weak-password":
+          backendErrors.newPassword =
+            "The new password must be at least 6 characters long.";
+          break;
+        case "auth/requires-recent-login":
+          backendErrors.general =
+            "For security reasons, please log out and log back in before making these changes.";
+          break;
+        default:
+          // Fallback for unexpected network or database issues
+          backendErrors.general =
+            error.message || "An unexpected error occurred. Please try again.";
+      }
+    setErrors(backendErrors)
     } finally {
       setLoading(false);
     }
@@ -113,9 +141,9 @@ const Login = () => {
                 >
                   {loading ? <FaSpinner /> : "Log in"}
                 </button>
-                <Link to="/profile" className="font-body text-sm">
+                <p className="font-body text-sm cursor-not-allowed text-gray-400">
                   Forgot password?
-                </Link>
+                </p>
               </div>
             </form>
           </div>

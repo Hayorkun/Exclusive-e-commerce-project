@@ -110,11 +110,9 @@ function Navbar() {
               </span>
             </NavLink>
 
-            <button>
-              <NavLink to="/my-profile">
-                <User />
-              </NavLink>
-            </button>
+            <NavLink to="/my-profile">
+              <User />
+            </NavLink>
           </div>
         </div>
       </nav>
@@ -163,9 +161,9 @@ function Navbar() {
               </ul>
             </div>
             <div className="mt-5 h-full flex flex-col border-t">
-              <NavLink className="flex justify-between text-sm mt-2 bg-gray-100 items-center">
+              <NavLink to="/" className="flex justify-between text-sm mt-2 bg-gray-100 items-center">
                 <p className="font-body ">Our category</p>
-                <>See all</>
+                <span>See all</span>
               </NavLink>
               {category.map((c) => (
                 <button

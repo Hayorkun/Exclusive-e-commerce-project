@@ -12,9 +12,9 @@ const OrderSuccess = () => {
             <CheckIcon className="size-10 stroke-7 stroke-white" />
           </div>
           <p className="font-body max-w-xs">
-            Your order no. is 
+            Your order has been confirmed!
             <br />
-            <span className="font-semibold tracking-widest">khjakfhkafh</span>
+            <span className="font-semibold tracking-widest text-sm">Check your email for order details</span>
           </p>
         </div>
       </div>
