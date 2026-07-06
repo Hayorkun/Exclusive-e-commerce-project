@@ -20,15 +20,18 @@ export const ShopProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        // Fetch only 50 products initially for better performance
         const response = await axios.get(
-          "https://dummyjson.com/products?limit=200",
+          "https://dummyjson.com/products?limit=50&skip=0",
+          { timeout: 8000 } // Add timeout to prevent hanging
         );
         const data = response.data.products;
 
         setProducts(data);
         setCategory(getCategoriesWithRepImages(data));
         setMainCategory(getMainCategory(data));
-      } catch {
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
         setIsError(true);
       }
     };
@@ -65,11 +68,19 @@ export const ShopProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    // Debounce localStorage updates to prevent excessive writes
+    const timer = setTimeout(() => {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }, 500);
+    return () => clearTimeout(timer);
   }, [cart]);
 
   useEffect(() => {
-    localStorage.setItem("wishList", JSON.stringify(wishList));
+    // Debounce localStorage updates to prevent excessive writes
+    const timer = setTimeout(() => {
+      localStorage.setItem("wishList", JSON.stringify(wishList));
+    }, 500);
+    return () => clearTimeout(timer);
   }, [wishList]);
 
   function addToCart(product) {

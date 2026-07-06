@@ -40,6 +40,7 @@ const ProductDetail = () => {
                   src={img}
                   alt={product.title}
                   className="w-full h-24 object-contain cursor-pointer"
+                  loading="lazy"
                 />
               </div>
             ))}
@@ -49,6 +50,7 @@ const ProductDetail = () => {
               src={product.thumbnail}
               alt={product.title}
               className="object-contain cursor-pointer"
+              loading="lazy"
             />
           </div>
           <div className="flex-2/6 order-3 flex flex-col p-2">

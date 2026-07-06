@@ -38,6 +38,7 @@ const RelatedItems = ({ category, currentId }) => {
                       src={r.images[0]}
                       alt={r.title}
                       className=" object-contain h-30"
+                      loading="lazy"
                     />
                     <div className="absolute bg-red-500 left-1 top-1 p-0.5">
                       <p className="font-body text-white text-xs">{discountPercentage.toFixed(1)}% OFF</p>

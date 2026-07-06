@@ -44,11 +44,12 @@ const Categories = () => {
                   src={c.image}
                   alt={c.category}
                   className="w-full h-full rounded-full"
+                  loading="lazy"
                 />
               </div>
               <p className="text-xs">{c.category}</p>
             </div>
-          ))}
+          ))})
         </div>
       </div>
     </div>

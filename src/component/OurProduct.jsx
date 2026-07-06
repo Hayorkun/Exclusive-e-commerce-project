@@ -30,7 +30,12 @@ const OurProduct = () => {
                     to={`/product/${f.id}`}
                     className="flex justify-center bg-gray-100 h-25"
                   >
-                    <img src={f.images[0]} alt={f.title} className="w-25" />
+                    <img 
+                      src={f.images[0]} 
+                      alt={f.title} 
+                      className="w-25"
+                      loading="lazy"
+                    />
                   </NavLink>
                   <div className="absolute right-1 top-1 w-fit">
                     <button

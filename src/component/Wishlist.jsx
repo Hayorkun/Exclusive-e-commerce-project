@@ -37,6 +37,7 @@ const Wishlist = () => {
                   src={w.image}
                   alt={w.title}
                   className="w-25 object-contain"
+                  loading="lazy"
                 />
               </NavLink>
               <button
