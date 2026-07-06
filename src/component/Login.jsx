@@ -7,7 +7,7 @@ import { FaSpinner } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const { logIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});

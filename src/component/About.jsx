@@ -1,13 +1,18 @@
-import { NavLink } from "react-router-dom";
 import Images from "../assets/Image";
+import { StoreIcon, LucideCircleDollarSign, LucideGift, BadgeDollarSign } from "lucide-react";
 
 const About = () => {
-
+  const STATS = [
+    { icon: <StoreIcon />, rate: "10.5k", desc: "Seller active on site" },
+    { icon: <LucideCircleDollarSign />, rate: "33k", desc: "Monthly product sale" },
+    { icon: <LucideGift />, rate: "45.5k", desc: "Customers active on our site" },
+    { icon: <BadgeDollarSign />, rate: "25k", desc: "Annual gross sale on site" },
+  ];
 
   return (
     <section className="my-12">
       <div className="my-max-width w-11/12 mx-auto">
-        <div className="grid md:grid-cols-2 gap-3 md:gap-0 mb-10">
+        <div className="grid md:grid-cols-2 gap-3 md:gap-0">
           <div className="flex flex-col justify-center">
             <h1 className="font-heading font-semibold text-4xl mb-6">
               Our Story
@@ -26,16 +31,26 @@ const About = () => {
             </p>
           </div>
           <div className="">
-            <img src={Images.AfricanShoppers} alt="Two smiling women holding shopping bags and looking at a smartphone" className="w-full h-full object-cover" />
+            <img
+              src={Images.AfricanShoppers}
+              alt="Two smiling women holding shopping bags and looking at a smartphone"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          <div className="p-5 border"></div>
-          <div className="p-5 border"></div>
-          <div className="p-5 border"></div>
-          <div className="p-5 border"></div>
-         
-          
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-15">
+          {STATS.map((s, index) => (
+            <div key={index} className="p-5 border flex flex-col items-center">
+              <div className="p-2.5 rounded-full bg-gray-400/35 mb-3">
+                <div className="p-1.5 rounded-full bg-black text-white">{s.icon}</div>
+              </div>
+              <p className="font-body text-2xl"><strong>{s.rate}</strong></p>
+              <p className="font-body text-xs">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid md:grid-cols-3">
+
         </div>
       </div>
     </section>
